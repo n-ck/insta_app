@@ -17,9 +17,9 @@ class GetPage(ListView):
 
 		form = PageForm()
 
-		return HttpResponse("Yes, it works!")
+		# return HttpResponse("Yes, it works!")
 
-		# return render(request, 'page.html', {'form': form})
+		return render(request, 'page.html', {'form': form})
 
 	def post(self, request):
 		pass
