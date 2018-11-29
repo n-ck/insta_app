@@ -2,6 +2,9 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'insta'
+
 urlpatterns = [
-    url('', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
+    url(r'^page/$', views.GetPage.as_view(), name='get_page'),
 ]
