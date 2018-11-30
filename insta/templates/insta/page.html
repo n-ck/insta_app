@@ -6,9 +6,12 @@
 {% block content %}
 <h1>Title</h1>
 
-<form action="/your-name/" method="post">
+<form action="{% url 'insta:get_page' %}" method="POST">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" />
 </form>
+
+{{ answer }}
+
 {% endblock %}

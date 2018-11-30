@@ -3,29 +3,40 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic.list import ListView
+from django.views.generic import View
 
 from .forms import PageForm
 
+from bs4 import BeautifulSoup
 
 def index(request):
     return HttpResponse("Hello, world. You're at the insta index.")
 
-class GetPage(ListView):
+class GetPage(View):
 
 	def get(self, request):
 
 		form = PageForm()
 
+		context = {
+			'form': form,
+			'answer': None,
+		}
+
 		# return HttpResponse("Yes, it works!")
 
-		return render(request, 'page.html', {'form': form})
+		return render(request, 'page.html', context)
 
 	def post(self, request):
-		pass
+		
+		form = PageForm(request.POST)
 
-		form = PageForm()
+		response = form['page']
+
+		context = {
+			'form': form,
+			'answer': response
+		}
 
 		if form.is_valid():
-			# Process the data
-			pass
+			return render(request, 'page.html', context)
