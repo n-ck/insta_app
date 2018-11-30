@@ -20,23 +20,24 @@ class GetPage(View):
 
 		context = {
 			'form': form,
-			'answer': None,
+			'answer': "",
 		}
 
-		# return HttpResponse("Yes, it works!")
-
 		return render(request, 'page.html', context)
+
 
 	def post(self, request):
 		
 		form = PageForm(request.POST)
-
-		response = form['page']
-
-		context = {
-			'form': form,
-			'answer': response
-		}
+		response = None
 
 		if form.is_valid():
+
+			response = form.cleaned_data['page']
+
+			context = {
+				'form': form,
+				'answer': response
+			}
+
 			return render(request, 'page.html', context)
