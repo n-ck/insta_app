@@ -17,8 +17,7 @@ class GetPostImg(View):
 
 	def get(self, request):
 
-		form = PageForm()
-
+		form = PostForm()
 		context = {
 			'form': form,
 			'answer': "",
@@ -28,13 +27,12 @@ class GetPostImg(View):
 
 	def post(self, request):
 		
-		form = PageForm(request.POST)
+		form = PostForm(request.POST)
 		response = None
 
 		if form.is_valid():
 
 			response = form.cleaned_data['post']
-
 			imgscript = utils.get_post_script(response)
 			imgurl = utils.get_post_src(imgscript) 
 
@@ -44,3 +42,38 @@ class GetPostImg(View):
 			}
 
 			return render(request, 'post.html', context)
+
+
+class GetPage(View):
+
+	def get(self, request):
+		
+		form = PageForm()
+		context = {
+			'form': form,
+			'page': "",
+			'img': {}
+		}
+
+		return render(request, 'page.html' , context)
+
+
+	def post(self, request):
+		
+		form = PageForm(request.POST)
+
+		if form.is_valid():
+
+			response = form.cleaned_data['page']
+			page = utils.get_page_url(response)
+			print utils.get_page_script(page)
+
+			context = {
+				'form': form,
+				'page': page,
+				'img': {},
+			}
+
+			return render(request, 'page.html', context)
+
+
