@@ -7,15 +7,13 @@ from django.views.generic import View
 
 from .forms import PageForm
 
-from bs4 import BeautifulSoup
-import requests
 import utils
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the insta index.")
 
-class GetPage(View):
+class GetPostImg(View):
 
 	def get(self, request):
 
@@ -26,8 +24,7 @@ class GetPage(View):
 			'answer': "",
 		}
 
-		return render(request, 'page.html', context)
-
+		return render(request, 'post.html', context)
 
 	def post(self, request):
 		
@@ -36,27 +33,14 @@ class GetPage(View):
 
 		if form.is_valid():
 
-			response = form.cleaned_data['page']
+			response = form.cleaned_data['post']
 
-			r = requests.get(response)
-			print r
-
-			soup = BeautifulSoup(r.text, 'html.parser')
-
-			print soup.title
-
-			# print soup.script.text
-			scriptlist = []
-			for element in soup.find_all('script'):
-				scriptlist.append(element.text)
-
-			imgscript = scriptlist[4]
-
-			imgurl = utils.get_post_img(imgscript) 
+			imgscript = utils.get_post_script(response)
+			imgurl = utils.get_post_src(imgscript) 
 
 			context = {
 				'form': form,
 				'answer': imgurl
 			}
 
-			return render(request, 'page.html', context)
+			return render(request, 'post.html', context)

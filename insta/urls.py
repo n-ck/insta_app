@@ -6,5 +6,5 @@ app_name = 'insta'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^page/$', views.GetPage.as_view(), name='get_page'),
+    url(r'^post/$', views.GetPostImg.as_view(), name='get_post'),
 ]

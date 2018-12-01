@@ -1,6 +1,22 @@
+from bs4 import BeautifulSoup
+import requests
 import re
 
-def get_post_img(rawscript):	
+def get_post_script(posturl):
+
+	r = requests.get(posturl)
+	soup = BeautifulSoup(r.text, 'html.parser')
+
+	# Get all javascript from the page:
+	scriptlist = []
+	for element in soup.find_all('script'):
+		scriptlist.append(element.text)
+
+	return scriptlist[4]
+
+
+def get_post_src(rawscript):	
+	## Used this regex generator: txt2re.com
 
 	re1='.*?'	# Non-greedy match on filler
 	re2='(display)'	# Word 1
