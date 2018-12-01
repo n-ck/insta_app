@@ -8,8 +8,9 @@ from django.views.generic import View
 from .forms import PageForm
 
 from bs4 import BeautifulSoup
-import re
 import requests
+import utils
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the insta index.")
@@ -51,27 +52,11 @@ class GetPage(View):
 
 			imgscript = scriptlist[4]
 
-			re1='.*?'	# Non-greedy match on filler
-			re2='(display)'	# Word 1
-			re3='.*?'	# Non-greedy match on filler
-			re4='((?:http|https)(?::\\/{2}[\\w]+)(?:[\\/|\\.]?)(?:[^\\s"]*))'	# HTTP URL 1
-
-			rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
-			m = rg.search(imgscript)
-
-			if m:
-			    word1=m.group(1)
-			    httpurl1=m.group(2)
-			    print httpurl1
-
-			# for img in soup.find_all('img'):
-			# 	print (img.get('src'))
+			imgurl = utils.get_post_img(imgscript) 
 
 			context = {
 				'form': form,
-				'answer': soup.title
+				'answer': imgurl
 			}
-
-
 
 			return render(request, 'page.html', context)
