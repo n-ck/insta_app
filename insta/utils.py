@@ -67,5 +67,4 @@ def get_page_imgs(pagescript):
 	result = re.findall(rg, pagescript)
 
 	for images in result:
-		print images
-		
+		print images[1]
