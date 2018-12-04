@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from models import IgPage
 
-from .forms import PageForm
+from .forms import PostForm, PageForm
 
 import utils
 
@@ -53,7 +53,8 @@ class GetPage(View):
 		context = {
 			'form': form,
 			'page': "",
-			'img': {}
+			'img': {},
+			'allpages': [],
 		}
 
 		return render(request, 'page.html' , context)
@@ -72,10 +73,13 @@ class GetPage(View):
 			igpage = IgPage(title=page)
 			igpage.save()
 
+			allpages = IgPage.objects.all()
+
 			context = {
 				'form': form,
 				'page': page,
 				'img': {},
+				'allpages': allpages
 			}
 
 			return render(request, 'page.html', context)

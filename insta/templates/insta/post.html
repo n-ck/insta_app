@@ -6,11 +6,19 @@
 {% block content %}
 <h1>Title</h1>
 
-<form action="{% url 'insta:get_post' %}" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
-</form>
+
+<div class="col-md-6">
+	<form action="{% url 'insta:get_post' %}" method="POST">
+		<div class="form-group">
+			<label for="" class="">Post</label>
+			{{ form.post }}
+		</div>
+		<button type="submit" class="btn btn-primary mb-2">Submit</button>
+		{% csrf_token %}
+	</form>
+</div>
+
+
 
 <img src="{{ answer }}" height="75%">
 
