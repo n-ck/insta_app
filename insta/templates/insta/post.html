@@ -4,8 +4,8 @@
 
 
 {% block content %}
-<h1>Title</h1>
 
+<h1>Title</h1>
 
 <div class="col-md-6">
 	<form action="{% url 'insta:get_post' %}" method="POST">
@@ -18,9 +18,6 @@
 	</form>
 </div>
 
-
-
 <img src="{{ answer }}" height="75%">
-
 
 {% endblock %}

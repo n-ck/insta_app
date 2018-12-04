@@ -4,6 +4,7 @@
 
 
 {% block content %}
+
 <h1>Page</h1>
 
 <form action="{% url 'insta:get_page' %}" method="POST">
@@ -15,7 +16,13 @@
 <br />
 <a href="{{ page }}" target="_blank">{{ page }}</a>
 
-<p>{{ allpages }}</p>
+<br />
+<p>Database output:</p>
+<ul>
+{% for output in allpages %}
+	<li>{{ output.title }}</li>
+{% endfor %}
+</ul>
 
 
 {% endblock %}
