@@ -6,4 +6,10 @@ from django.db import models
 # Create your models here.
 
 class IgPage(models.Model):
-    title = models.CharField(max_length=100)
+    page = models.CharField(max_length=250, null=True)
+    url = models.CharField(max_length=2083, null=True)
+
+class IgPost(models.Model):
+	url = models.CharField(max_length=2083, null=True)
+	page = models.CharField(max_length=250, null=True)
+	img = models.CharField(max_length=2083, null=True)

@@ -66,18 +66,17 @@ class GetPage(View):
 
 		if form.is_valid():
 
-			response = form.cleaned_data['page']
-			page = utils.get_page_url(response)
-			print utils.get_page_script(page)
+			page = form.cleaned_data['page']
+			url = utils.get_page_url(page)
 
-			igpage = IgPage(title=page)
+			igpage = IgPage(page=page, url=url)
 			igpage.save()
 
 			allpages = IgPage.objects.all()
 
 			context = {
 				'form': form,
-				'page': page,
+				'page': url,
 				'img': {},
 				'allpages': allpages
 			}
