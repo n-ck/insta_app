@@ -3,7 +3,7 @@ import requests
 import re
 
 
-def get_post_script(posturl):
+def get_post_script(posturl, scriptno):
 
 	r = requests.get(posturl)
 	soup = BeautifulSoup(r.text, 'html.parser')
@@ -13,7 +13,9 @@ def get_post_script(posturl):
 	for element in soup.find_all('script'):
 		scriptlist.append(element.text)
 
-	return scriptlist[4]
+	scriptno = int(scriptno)
+
+	return scriptlist[scriptno]
 
 
 def get_post_src(rawscript):	
@@ -32,6 +34,23 @@ def get_post_src(rawscript):
 		httpurl=m.group(2)
 		
 	return httpurl
+
+
+def get_page_from_post(rawscript):	
+	## Used this regex generator: txt2re.com
+
+	re1='.*?'	# Non-greedy match on filler
+	re2='(alternateName)'	# Uninteresting: word
+	re3='.*?'	# Non-greedy match on filler
+	re4='((?:[a-z][a-z]+))'	# Word 1
+
+	rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
+	m = rg.search(rawscript)
+
+	if m:
+		pagename=m.group(2)
+		
+	return pagename
 
 
 def get_page_url(pagename):

@@ -5,12 +5,12 @@
 
 {% block content %}
 
-<h1>Title</h1>
+<h1>Post</h1>
 
 <div class="col-md-6">
 	<form action="{% url 'insta:get_post' %}" method="POST">
 		<div class="form-group">
-			<label for="" class="">Post</label>
+			<label for="" class="">Post:</label>
 			{{ form.post }}
 		</div>
 		<button type="submit" class="btn btn-primary mb-2">Submit</button>

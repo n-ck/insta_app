@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
-from models import IgPage
+from models import IgPage, IgPost
 
 from .forms import PostForm, PageForm
 
@@ -34,8 +34,14 @@ class GetPostImg(View):
 		if form.is_valid():
 
 			response = form.cleaned_data['post']
-			imgscript = utils.get_post_script(response)
+			imgscript = utils.get_post_script(response, 4)
 			imgurl = utils.get_post_src(imgscript) 
+
+			pagescript = utils.get_post_script(response, 3)
+			pagename= utils.get_page_from_post(pagescript)
+
+			igpost = IgPost(url=response, page=pagename, img=imgurl)
+			igpost.save()
 
 			context = {
 				'form': form,

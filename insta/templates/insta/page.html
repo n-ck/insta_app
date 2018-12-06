@@ -7,11 +7,16 @@
 
 <h1>Page</h1>
 
-<form action="{% url 'insta:get_page' %}" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
-</form>
+<div class="col-md-6">
+	<form action="{% url 'insta:get_page' %}" method="POST">
+		<div class="form-group">
+			<label for="" class="">Page:</label>
+			{{ form.page }}
+		</div>
+		<button type="submit" class="btn btn-primary mb-2">Submit</button>
+		{% csrf_token %}
+	</form>
+</div>
 
 <br />
 <a href="{{ page }}" target="_blank">{{ page }}</a>
@@ -20,7 +25,7 @@
 <p>Database output:</p>
 <ul>
 {% for output in allpages %}
-	<li>{{ output.title }}</li>
+	<li>{{ output.page }}</li>
 {% endfor %}
 </ul>
 
