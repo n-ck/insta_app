@@ -10,6 +10,7 @@
 <div class="col-md-6">
 	<form action="{% url 'insta:get_page' %}" method="POST">
 		<div class="form-group">
+			<p>Enter page name:</p>
 			<label for="" class="">Page:</label>
 			{{ form.page }}
 		</div>
@@ -22,10 +23,16 @@
 <a href="{{ page }}" target="_blank">{{ page }}</a>
 
 <br />
-<p>Database output:</p>
+<!-- <p>Database output:</p>
 <ul>
 {% for output in allpages %}
 	<li>{{ output.page }}</li>
+{% endfor %}
+</ul> -->
+
+<ul>
+{% for post in posts %}
+	<li><img src="{{ post }}"></li>
 {% endfor %}
 </ul>
 

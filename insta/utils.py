@@ -83,7 +83,12 @@ def get_page_imgs(pagescript):
 	rg = re.compile(re1+re2+re3+re4,re.IGNORECASE|re.DOTALL)
 	m = rg.search(pagescript)
 
+	pagelist = []
+
 	result = re.findall(rg, pagescript)
 
 	for images in result:
-		print images[1]
+		# print images[1]
+		pagelist.append(images[1])
+
+	return pagelist

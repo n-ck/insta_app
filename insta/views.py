@@ -40,7 +40,9 @@ class GetPostImg(View):
 			pagescript = utils.get_post_script(response, 3)
 			pagename= utils.get_page_from_post(pagescript)
 
-			igpost = IgPost(url=response, page=pagename, img=imgurl)
+			tag = form.cleaned_data['tag']
+
+			igpost = IgPost(url=response, page=pagename, img=imgurl, tag=tag)
 			igpost.save()
 
 			context = {
@@ -59,7 +61,7 @@ class GetPage(View):
 		context = {
 			'form': form,
 			'page': "",
-			'img': {},
+			'posts': [],
 			'allpages': [],
 		}
 
@@ -80,13 +82,21 @@ class GetPage(View):
 
 			allpages = IgPage.objects.all()
 
+			allimgs = utils.get_page_script(url)
+			print allimgs
+
 			context = {
 				'form': form,
 				'page': url,
-				'img': {},
+				'posts': allimgs,
 				'allpages': allpages
 			}
 
 			return render(request, 'page.html', context)
 
 
+
+	# ideas:
+	# after entering page, you see the first 10 posts, and you can tag and save to the database
+	# posts page should have all saved posts with filters by tag
+	# 
