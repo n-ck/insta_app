@@ -35,11 +35,9 @@
 	<div class="col-sm-4">
 		<form action="{% url 'insta:get_page' %}" method="POST">
 			<img src="{{ post }}" class="img-fluid">
-<!-- 			<a href="{% url 'insta:save_post' url=page page=page img=post %}"> -->
-			<a href="{% url 'insta:save_post' url=page %}">
+			<a href="{% url 'insta:save_post' url=page img=post %}">
 				<button type="button" class="btn btn-light">Save</button>
 			</a>
-			<!-- ?url={{ url }}&page={{ form.page }}&img={{ post }} -->
 		</form>
 	</div>
 {% endfor %}
