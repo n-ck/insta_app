@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
-from models import IgPage, IgPost
+from models import IgPage, IgPost, SavePagePost
 
 from .forms import PostForm, PageForm
 
@@ -13,6 +13,7 @@ import utils
 
 def index(request):
     return HttpResponse("Hello, world. You're at the insta index.")
+
 
 class GetPostImg(View):
 
@@ -77,13 +78,15 @@ class GetPage(View):
 			page = form.cleaned_data['page']
 			url = utils.get_page_url(page)
 
+			request.session['page'] = page 
+
 			igpage = IgPage(page=page, url=url)
 			igpage.save()
 
 			allpages = IgPage.objects.all()
 
 			allimgs = utils.get_page_script(url)
-			print allimgs
+			# print allimgs
 
 			context = {
 				'form': form,
@@ -95,8 +98,24 @@ class GetPage(View):
 			return render(request, 'page.html', context)
 
 
+class SavePost(View):
 
-	# ideas:
-	# after entering page, you see the first 10 posts, and you can tag and save to the database
-	# posts page should have all saved posts with filters by tag
-	# 
+	def get(self, request, url, page):
+
+		igurl = request.GET.get('url')
+		igpage = request.GET.get('page')
+		igimg = request.GET.get('img')
+
+		## Save to DB:
+		# saveigpost = SavePagePost(url=igurl, page=igpage, img=igimg)
+		# saveigpost.save()
+
+		return HttpResponse("Img saved!")
+
+
+	# Further development:
+	# - after entering page, you see the first 10 posts, and you can tag and save to the database
+	# - posts page should have all saved posts with filters by tag
+	# - page with all saved post, you can tag them there
+
+

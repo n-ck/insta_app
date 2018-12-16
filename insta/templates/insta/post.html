@@ -5,11 +5,13 @@
 
 {% block content %}
 
+
 <h1>Post</h1>
 
 <div class="col-md-6">
 	<form action="{% url 'insta:get_post' %}" method="POST">
 		<div class="form-group">
+			<p>Enter post url:</p>
 			<label for="" class="">Post:</label>
 			{{ form.post }}
 			{{ form.tag }}
@@ -19,6 +21,12 @@
 	</form>
 </div>
 
-<img src="{{ answer }}" height="75%">
+<div class="row justify-content-start">
+	<div class="col-6">
+		<img src="{{ answer }}" class="img-fluid">
+	</div>
+</div>
+
+
 
 {% endblock %}
