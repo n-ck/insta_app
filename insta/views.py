@@ -62,6 +62,7 @@ class GetPage(View):
 		context = {
 			'form': form,
 			'page': "",
+			'pageurl': "",
 			'posts': [],
 			'allpages': [],
 		}
@@ -90,7 +91,8 @@ class GetPage(View):
 
 			context = {
 				'form': form,
-				'page': url,
+				'page': page,
+				'pageurl': url,
 				'posts': allimgs,
 				'allpages': allpages
 			}
@@ -103,9 +105,9 @@ class SavePost(View):
 	def get(self, request, **kwargs):
 
 		igurl = kwargs.get('url')
-		igpage = igurl.replace("https://www.instagram.com/", "")
-		igimg = kwargs.get('img')
-		print "this is the img: %s and this the page: %s" % (igimg, igpage)
+		# igpage = igurl.replace("https://www.instagram.com/", "")
+		igpage = kwargs.get('page')
+		print "this is the img: %s and this the page: %s" % (igurl, igpage)
 
 		## Save to DB:
 		# saveigpost = SavePagePost(url=igurl, page=igpage, img=igimg)

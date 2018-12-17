@@ -20,7 +20,7 @@
 </div>
 
 <br />
-<a href="{{ page }}" target="_blank">{{ page }}</a>
+<a href="{{ pageurl }}" target="_blank">{{ pageurl }}</a>
 
 <br />
 <!-- <p>Database output:</p>
@@ -35,7 +35,7 @@
 	<div class="col-sm-4">
 		<form action="{% url 'insta:get_page' %}" method="POST">
 			<img src="{{ post }}" class="img-fluid">
-			<a href="{% url 'insta:save_post' url=page img=post %}">
+			<a href="{% url 'insta:save_post' page=page img=post %}">
 				<button type="button" class="btn btn-light">Save</button>
 			</a>
 		</form>
