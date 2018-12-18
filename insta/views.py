@@ -104,16 +104,17 @@ class SavePost(View):
 
 	def get(self, request, **kwargs):
 
-		igurl = kwargs.get('url')
-		# igpage = igurl.replace("https://www.instagram.com/", "")
 		igpage = kwargs.get('page')
-		print "this is the img: %s and this the page: %s" % (igurl, igpage)
+		imgurl = kwargs.get('img')
+		pageurl = "https://www.instagram.com/%s" % igpage
 
-		## Save to DB:
-		# saveigpost = SavePagePost(url=igurl, page=igpage, img=igimg)
-		# saveigpost.save()
+		# print "this is the img: %s and this the page: %s" % (imgurl, igpage)
 
-		pagecontent = "Img saved! %s" % (igpage)
+		# Save to DB:
+		saveigpost = SavePagePost(url=pageurl, page=igpage, img=imgurl)
+		saveigpost.save()
+
+		pagecontent = "Img saved! %s %s" % (igpage, imgurl)
 
 		return HttpResponse(pagecontent)
 
