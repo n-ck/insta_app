@@ -8,14 +8,14 @@
 <h1>Page</h1>
 
 <div class="col-md-6">
-	<form action="{% url 'insta:get_page' %}" method="POST">
+	<form action="{% url 'insta:get_page' %}" method="GET">
 		<div class="form-group">
 			<p>Enter page name:</p>
 			<label for="" class="">Page:</label>
 			{{ form.page }}
 		</div>
 		<button type="submit" class="btn btn-primary mb-2">Submit</button>
-		{% csrf_token %}
+<!-- 		{% csrf_token %} -->
 	</form>
 </div>
 
@@ -36,7 +36,7 @@
 		<form action="{% url 'insta:get_page' %}" method="POST">
 			<img src="{{ post }}" class="img-fluid">
 			<a href="{% url 'insta:save_post' page=page img=post %}">
-				<button type="button" class="btn btn-light">Save</button>
+				<button type="button" class="btn btn-light" id="savepost">Save</button>
 			</a>
 		</form>
 	</div>

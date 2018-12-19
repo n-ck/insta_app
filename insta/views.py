@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import View
 from models import IgPage, IgPost, SavePagePost
@@ -57,25 +57,11 @@ class GetPostImg(View):
 class GetPage(View):
 
 	def get(self, request):
+
+		form = PageForm(request.GET)
 		
-		form = PageForm()
-		context = {
-			'form': form,
-			'page': "",
-			'pageurl': "",
-			'posts': [],
-			'allpages': [],
-		}
-
-		return render(request, 'page.html' , context)
-
-
-	def post(self, request):
-		
-		form = PageForm(request.POST)
-
 		if form.is_valid():
-
+			
 			page = form.cleaned_data['page']
 			url = utils.get_page_url(page)
 
@@ -99,6 +85,49 @@ class GetPage(View):
 
 			return render(request, 'page.html', context)
 
+		else: 
+			form = PageForm()
+			context = {
+				'form': form,
+				'page': "",
+				'pageurl': "",
+				'posts': [],
+				'allpages': [],
+			}
+
+			return render(request, 'page.html' , context)
+
+	## Changed Page form to GET request:
+	
+	# def post(self, request):
+		
+	# 	form = PageForm(request.POST)
+
+	# 	if form.is_valid():
+
+	# 		page = form.cleaned_data['page']
+	# 		url = utils.get_page_url(page)
+
+	# 		request.session['page'] = page 
+
+	# 		igpage = IgPage(page=page, url=url)
+	# 		igpage.save()
+
+	# 		allpages = IgPage.objects.all()
+
+	# 		allimgs = utils.get_page_script(url)
+	# 		# print allimgs
+
+	# 		context = {
+	# 			'form': form,
+	# 			'page': page,
+	# 			'pageurl': url,
+	# 			'posts': allimgs,
+	# 			'allpages': allpages
+	# 		}
+
+	# 		return render(request, 'page.html', context)
+
 
 class SavePost(View):
 
@@ -116,7 +145,10 @@ class SavePost(View):
 
 		pagecontent = "Img saved! %s %s" % (igpage, imgurl)
 
-		return HttpResponse(pagecontent)
+		# return HttpResponse(pagecontent)
+
+		redirecturl = '/page/?page=%s' % igpage
+		return redirect(redirecturl)
 
 
 	# Further development:
