@@ -151,6 +151,19 @@ class SavePost(View):
 		return redirect(redirecturl)
 
 
+class ViewSaved(View):
+
+	def get(self, request):
+
+		savedposts = SavePagePost.objects.all()
+
+		context = {
+			'posts': savedposts,
+		}
+
+		return render(request, 'saved_posts.html', context)
+
+
 	# Further development:
 	# - after entering page, you see the first 10 posts, and you can tag and save to the database
 	# - posts page should have all saved posts with filters by tag

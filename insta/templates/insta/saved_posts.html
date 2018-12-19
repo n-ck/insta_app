@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+
+{% block content %}
+
+<h1>Saved Posts</h1>
+
+<!-- <div class="col-md-6">
+	
+</div>
+
+<br />
+<a href="{{ pageurl }}" target="_blank">{{ pageurl }}</a> -->
+
+<br />
+<!-- <p>Database output:</p>
+<ul>
+{% for output in allpages %}
+	<li>{{ output.page }}</li>
+{% endfor %}
+</ul> -->
+
+<div class="row">
+{% for post in posts %}
+	<div class="col-sm-4">
+			<img src="{{ post.img }}" class="img-fluid">
+	</div>
+{% endfor %}
+</div>
+
+
+{% endblock %}
