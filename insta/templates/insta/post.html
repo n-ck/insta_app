@@ -21,11 +21,24 @@
 	</form>
 </div>
 
+
+{% if "None" not in post %}
 <div class="row justify-content-start">
 	<div class="col-6">
-		<img src="{{ answer }}" class="img-fluid">
+		<img src="{{ post }}" class="img-fluid">
+		<a href="{% url 'insta:save_post' page=page img=post %}">
+			<button type="button" class="btn btn-light" id="savepost">Save</button>
+		</a>
 	</div>
 </div>
+{% else %}
+5 recent posts:
+<ul>
+	{% for ig in recent %}
+	<li>{{ ig.img }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
 
 
 

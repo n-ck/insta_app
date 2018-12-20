@@ -20,9 +20,12 @@ class GetPostImg(View):
 	def get(self, request):
 
 		form = PostForm()
+		savedposts = SavePagePost.objects.all().order_by('-id')[:5]
 		context = {
 			'form': form,
-			'answer': "",
+			'page': "None",
+			'post': "None",
+			'recent': savedposts
 		}
 
 		return render(request, 'post.html', context)
@@ -48,7 +51,9 @@ class GetPostImg(View):
 
 			context = {
 				'form': form,
-				'answer': imgurl
+				'page': pagename,
+				'post': imgurl,
+				'recent': ""
 			}
 
 			return render(request, 'post.html', context)
@@ -87,12 +92,13 @@ class GetPage(View):
 
 		else: 
 			form = PageForm()
+			allpages = IgPage.objects.all().order_by('-id')[:5]
 			context = {
 				'form': form,
-				'page': "",
+				'page': "None",
 				'pageurl': "",
 				'posts': [],
-				'allpages': [],
+				'allpages': allpages,
 			}
 
 			return render(request, 'page.html' , context)
@@ -165,8 +171,11 @@ class ViewSaved(View):
 
 
 	# Further development:
-	# - after entering page, you see the first 10 posts, and you can tag and save to the database
+	# + after entering page, you see the first 10 posts, and you can tag and save to the database
 	# - posts page should have all saved posts with filters by tag
-	# - page with all saved post, you can tag them there
+	# - page with all saved post
+	# - post detail page, you can see full size and change tag here
+	# - manage tag page (create, delete or rename tags)
+
 
 

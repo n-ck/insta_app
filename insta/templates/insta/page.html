@@ -30,6 +30,15 @@
 {% endfor %}
 </ul> -->
 
+{% if "None" in page %}
+5 recent pages:
+<ul>
+	{% for ig in allpages %}
+	<li>{{ ig.url }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
+
 <div class="row">
 {% for post in posts %}
 	<div class="col-sm-4">
@@ -42,6 +51,8 @@
 	</div>
 {% endfor %}
 </div>
+
+
 
 
 {% endblock %}
