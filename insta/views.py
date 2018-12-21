@@ -189,7 +189,7 @@ class PostDetail(View):
 
 	# Further development:
 	# + after entering page, you see the first 10 posts, and you can tag and save to the database
-	# + after entering ost url, you can save the post to database
+	# + after entering post url, you can save the post to database
 	# + page with all saved post
 	# - posts page should have all saved posts with filters by tag
 	# - post detail page, you can see full size and change tag here

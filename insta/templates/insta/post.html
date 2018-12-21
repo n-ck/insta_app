@@ -33,11 +33,13 @@
 </div>
 {% else %}
 5 recent posts:
-<ul>
+<div class="row">
 	{% for ig in recent %}
-	<li>{{ ig.img }}</li>
+	<div class="col-3">
+		<img src="{{ ig.img }}" class="img-fluid">
+	</div>
 	{% endfor %}
-</ul>
+</div>
 {% endif %}
 
 
