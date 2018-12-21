@@ -34,7 +34,7 @@
 5 recent pages:
 <ul>
 	{% for ig in allpages %}
-	<li>{{ ig.url }}</li>
+	<li><a href="{% url 'insta:get_page' %}?page={{ ig.page }}">{{ ig.page }}</a></li>
 	{% endfor %}
 </ul>
 {% endif %}

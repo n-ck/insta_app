@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+
+{% block content %}
+
+
+<!-- <h1>Post</h1> -->
+
+<div class="row justify-content-start">
+	<div class="col-12">
+		<a href="{% url 'insta:post_detail' previous %}">Previous</a>
+		<a href="{% url 'insta:post_detail' next  %}">Next</a>
+		
+		<img src="{{ post.img }}" class="img-fluid">
+	</div>
+</div>
+
+
+{% endblock %}

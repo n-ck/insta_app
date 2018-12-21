@@ -170,12 +170,31 @@ class ViewSaved(View):
 		return render(request, 'saved_posts.html', context)
 
 
+class PostDetail(View):
+
+	def get(self, request, postid):
+
+		post = SavePagePost.objects.get(pk=postid)
+		next_post = post.id + 1
+		previous_post = post.id - 1
+
+		context = {
+			'post': post,
+			'next': next_post,
+			'previous': previous_post
+		}
+
+		return render(request, 'post_detail.html', context)
+
+
 	# Further development:
 	# + after entering page, you see the first 10 posts, and you can tag and save to the database
+	# + after entering ost url, you can save the post to database
+	# + page with all saved post
 	# - posts page should have all saved posts with filters by tag
-	# - page with all saved post
 	# - post detail page, you can see full size and change tag here
 	# - manage tag page (create, delete or rename tags)
+	# - rename variables with underscore in naming
 
 
 

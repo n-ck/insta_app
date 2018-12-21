@@ -25,7 +25,9 @@
 <div class="row">
 {% for post in posts %}
 	<div class="col-sm-4">
+		<a href="{% url 'insta:post_detail' post.pk  %}">
 			<img src="{{ post.img }}" class="img-fluid">
+		</a>
 	</div>
 {% endfor %}
 </div>
