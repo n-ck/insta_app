@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import View
 from models import IgPage, IgPost, SavePagePost
+from django.contrib.auth import authenticate, login, logout
 
 from .forms import PostForm, PageForm
 
@@ -12,7 +13,7 @@ import utils
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the insta index.")
+    return render(request, 'index.html', {})
 
 
 class GetPostImg(View):

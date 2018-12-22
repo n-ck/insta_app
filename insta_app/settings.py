@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'insta.apps.InstaConfig'
+    'insta.apps.InstaConfig',
+    'authenticate.apps.AuthenticateConfig'
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
                  os.path.join(BASE_DIR, 'insta', 'templates', 'insta'),
+                os.path.join(BASE_DIR, 'authenticate', 'templates', 'authenticate'),
                 ],
         'APP_DIRS': True,
         'OPTIONS': {

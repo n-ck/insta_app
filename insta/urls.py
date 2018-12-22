@@ -5,7 +5,7 @@ from . import views
 app_name = 'insta'
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    # url(r'^$', views.index, name='index'),
     url(r'^post/$', views.GetPostImg.as_view(), name='get_post'),
     url(r'^post/(?P<postid>\d+)/$', views.PostDetail.as_view(), name="post_detail"),
     url(r'^page/$', views.GetPage.as_view(), name='get_page'),
