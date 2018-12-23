@@ -3,6 +3,7 @@ from django import forms
 TAGS = [
 ('cars', 'Cars'),
 ('inspiration', 'Inspiration'),
+('other', 'Other'),
 ]
 
 class PostForm(forms.Form):
@@ -12,3 +13,8 @@ class PostForm(forms.Form):
 
 class PageForm(forms.Form):
 	page = forms.CharField(label='IG Page Name', max_length=150)
+
+
+class TagForm(forms.Form):
+	tag = forms.CharField(label='Tag:', 
+						  widget=forms.Select(choices=TAGS))

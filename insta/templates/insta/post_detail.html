@@ -12,10 +12,19 @@
 	<div class="col-12">
 		<a href="{% url 'insta:post_detail' previous %}">Previous</a>
 		<a href="{% url 'insta:post_detail' next  %}">Next</a>
-		
+
 		<img src="{{ post.img }}" class="img-fluid">
 	</div>
 </div>
+
+<form action="{% url 'insta:post_detail' postid=post.pk%}" method="POST">
+	<div class="form-group">
+		<label for="" class="">Tag:</label>
+		{{ form.tag }}
+	</div>
+	<button type="submit" class="btn btn-primary mb-2">Save</button>
+	{% csrf_token %}
+</form>
 
 
 {% endblock %}

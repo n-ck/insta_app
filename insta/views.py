@@ -7,7 +7,7 @@ from django.views.generic import View
 from models import IgPage, IgPost, SavePagePost
 from django.contrib.auth import authenticate, login, logout
 
-from .forms import PostForm, PageForm
+from .forms import PostForm, PageForm, TagForm
 
 import utils
 
@@ -179,13 +179,39 @@ class PostDetail(View):
 		next_post = post.id + 1
 		previous_post = post.id - 1
 
+		form = PostForm()
+
 		context = {
+			'form': form, 
 			'post': post,
 			'next': next_post,
 			'previous': previous_post
 		}
 
 		return render(request, 'post_detail.html', context)
+
+	def post(self, request, postid):
+
+		form = TagForm()
+
+		if form.is_valid():
+			
+			tag = form.cleaned_data['tag']
+			print tag
+
+			context = {
+				'form': form,
+				'post': post,
+				'next': next_post,
+				'previous': previous_post
+			}
+
+			update_tag = SavePagePost(tag=tag)
+			update_tag.save()
+
+			print tag
+
+			return render(request, 'post_detail.html', context)
 
 
 	# Further development:
