@@ -179,37 +179,40 @@ class PostDetail(View):
 		next_post = post.id + 1
 		previous_post = post.id - 1
 
-		form = PostForm()
+		form = TagForm()
 
 		context = {
 			'form': form, 
 			'post': post,
 			'next': next_post,
-			'previous': previous_post
+			'previous': previous_post,
+			'tag': post.tag
 		}
 
 		return render(request, 'post_detail.html', context)
 
 	def post(self, request, postid):
 
-		form = TagForm()
+		form = TagForm(request.POST)
 
 		if form.is_valid():
 			
 			tag = form.cleaned_data['tag']
-			print tag
+
+			post = SavePagePost.objects.get(pk=postid)
+			next_post = post.id + 1
+			previous_post = post.id - 1
+
+			post.tag = tag
+			post.save()
 
 			context = {
 				'form': form,
 				'post': post,
 				'next': next_post,
-				'previous': previous_post
+				'previous': previous_post,
+				'tag': post.tag
 			}
-
-			update_tag = SavePagePost(tag=tag)
-			update_tag.save()
-
-			print tag
 
 			return render(request, 'post_detail.html', context)
 
