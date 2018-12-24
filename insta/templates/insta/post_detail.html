@@ -20,7 +20,8 @@
 	</div>
 </div>
 
-<form action="{% url 'insta:post_detail' postid=post.pk%}" method="POST">
+<a href="{% url 'insta:delete_post' postid=post.pk %}" class="btn btn-secondary mb-2">Delete</a>
+<form action="{% url 'insta:post_detail' postid=post.pk %}" method="POST">
 	<div class="form-group">
 		<label for="" class="">Tag:</label>
 		{{ form.tag }}

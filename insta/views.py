@@ -217,6 +217,23 @@ class PostDetail(View):
 			return render(request, 'post_detail.html', context)
 
 
+class DeletePost(View):
+
+	def get(self, request, postid):
+
+		post = SavePagePost.objects.get(pk=postid)
+		post.delete()
+
+		return redirect('/savedposts/')
+
+
+class ViewSavedTag(View):
+
+	def get(self, request, tag):
+		pass
+		## page to see post with a certain tag only
+
+
 	# Further development:
 	# + after entering page, you see the first 10 posts, and you can tag and save to the database
 	# + after entering post url, you can save the post to database
