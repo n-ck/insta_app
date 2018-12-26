@@ -13,7 +13,6 @@ urlpatterns = [
 
     url(r'^savepost/(?P<page>[\w-]+)/(?P<img>.+)/$', views.SavePost.as_view(), name="save_post"),
     url(r'^savedposts/$', views.ViewSaved.as_view(), name="view_saved"),
-
-    # url(r'^saveposts/(?P<tag>[\w-]+)//$', views.SavePost.as_view(), name="save_post"),
+    url(r'^savedposts/(?P<tag>[\w-]+)/$', views.ViewSavedTag.as_view(), name="save_tag"),
 
 ]

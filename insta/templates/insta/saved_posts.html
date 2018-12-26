@@ -22,6 +22,10 @@
 {% endfor %}
 </ul> -->
 
+{% for tag in tags %}
+	<a href="{% url 'insta:save_tag' tag=tag.tag %}">{{ tag.tag }}</a>
+{% endfor %}
+
 <div class="row">
 {% for post in posts %}
 	<div class="col-sm-4">

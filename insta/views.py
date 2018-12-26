@@ -163,9 +163,11 @@ class ViewSaved(View):
 	def get(self, request):
 
 		savedposts = SavePagePost.objects.all()
+		tags = savedposts.values('tag').distinct()
 
 		context = {
 			'posts': savedposts,
+			'tags': tags
 		}
 
 		return render(request, 'saved_posts.html', context)
@@ -203,6 +205,8 @@ class PostDetail(View):
 			next_post = post.id + 1
 			previous_post = post.id - 1
 
+			unique_tags = SavePagePost.objects.filter(tag=tag)
+
 			post.tag = tag
 			post.save()
 
@@ -228,10 +232,17 @@ class DeletePost(View):
 
 
 class ViewSavedTag(View):
-
+	## page to see post with a certain tag only
 	def get(self, request, tag):
-		pass
-		## page to see post with a certain tag only
+		
+		tagged_posts = SavePagePost.objects.filter(tag=tag)
+
+		context = {
+			'posts': tagged_posts,
+		}
+
+		return render(request, 'saved_posts.html', context)
+
 
 
 	# Further development:
