@@ -70,7 +70,12 @@ def get_page_script(pageurl):
 	for element in soup.find_all('script'):
 		scriptlist.append(element.text)
 
-	return get_page_imgs(scriptlist[3])
+	page_imgs = get_page_imgs(scriptlist[3])
+
+	if not page_imgs:
+		return get_page_imgs(scriptlist[4])
+	else:
+		return page_imgs
 
 
 def get_page_imgs(pagescript):

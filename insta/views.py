@@ -18,7 +18,7 @@ def index(request):
     return render(request, 'index.html', {})
 
 
-class GetPostImg(View):
+class GetPostImg(LoginRequiredMixin, View):
 
 	def get(self, request):
 
@@ -62,7 +62,7 @@ class GetPostImg(View):
 			return render(request, 'post.html', context)
 
 
-class GetPage(View):
+class GetPage(LoginRequiredMixin, View):
 
 	def get(self, request):
 
@@ -105,37 +105,6 @@ class GetPage(View):
 			}
 
 			return render(request, 'page.html' , context)
-
-	## Changed Page form to GET request:
-	
-	# def post(self, request):
-		
-	# 	form = PageForm(request.POST)
-
-	# 	if form.is_valid():
-
-	# 		page = form.cleaned_data['page']
-	# 		url = utils.get_page_url(page)
-
-	# 		request.session['page'] = page 
-
-	# 		igpage = IgPage(page=page, url=url)
-	# 		igpage.save()
-
-	# 		allpages = IgPage.objects.all()
-
-	# 		allimgs = utils.get_page_script(url)
-	# 		# print allimgs
-
-	# 		context = {
-	# 			'form': form,
-	# 			'page': page,
-	# 			'pageurl': url,
-	# 			'posts': allimgs,
-	# 			'allpages': allpages
-	# 		}
-
-	# 		return render(request, 'page.html', context)
 
 
 class SavePost(View):
