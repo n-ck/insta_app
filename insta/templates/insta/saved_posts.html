@@ -23,7 +23,9 @@
 </ul> -->
 
 {% for tag in tags %}
-	<a href="{% url 'insta:save_tag' tag=tag.tag %}">{{ tag.tag }}</a>
+	<a href="{% url 'insta:save_tag' tag=tag.tag %}">
+	<h5><span class="badge badge-secondary">{{ tag.tag|title }}</span></h5>
+	</a>
 {% endfor %}
 
 <div class="row">

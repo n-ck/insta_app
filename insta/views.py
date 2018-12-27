@@ -163,7 +163,7 @@ class ViewSaved(View):
 	def get(self, request):
 
 		savedposts = SavePagePost.objects.all()
-		tags = savedposts.values('tag').distinct()
+		tags = savedposts.values('tag').distinct().exclude(tag=None)
 
 		context = {
 			'posts': savedposts,
@@ -236,9 +236,12 @@ class ViewSavedTag(View):
 	def get(self, request, tag):
 		
 		tagged_posts = SavePagePost.objects.filter(tag=tag)
+		all_tags = SavePagePost.objects.all().values('tag').distinct().exclude(tag=None)
+
 
 		context = {
 			'posts': tagged_posts,
+			'tags': all_tags,
 		}
 
 		return render(request, 'saved_posts.html', context)
@@ -249,6 +252,7 @@ class ViewSavedTag(View):
 	# + after entering page, you see the first 10 posts, and you can tag and save to the database
 	# + after entering post url, you can save the post to database
 	# + page with all saved post
+	# + logic to delete post on detail page
 	# - posts page should have all saved posts with filters by tag
 	# - post detail page, you can see full size and change tag here
 	# - manage tag page (create, delete or rename tags)
