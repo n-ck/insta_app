@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.views.generic import View
 from models import IgPage, IgPost, SavePagePost
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 from .forms import PostForm, PageForm, TagForm
 
@@ -158,7 +160,7 @@ class SavePost(View):
 		return redirect(redirecturl)
 
 
-class ViewSaved(View):
+class ViewSaved(LoginRequiredMixin, View):
 
 	def get(self, request):
 
@@ -173,7 +175,7 @@ class ViewSaved(View):
 		return render(request, 'saved_posts.html', context)
 
 
-class PostDetail(View):
+class PostDetail(LoginRequiredMixin, View):
 
 	def get(self, request, postid):
 

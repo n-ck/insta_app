@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def index(request):
@@ -18,9 +19,17 @@ def login_user(request):
 
 		if user is not None:
 			login(request, user)
+			messages.success(request, ('You Have Been Logged In!'))
 			return redirect('/')
 		else:
+			messages.success(request, ('Error Logging In - Please Try Again...'))
 			return redirect('/login/')
 
 	else:
 		return render(request, 'login.html', {})
+
+
+def logout_user(request):
+	logout(request)
+	messages.success(request, ('You Have Been Logged Out...'))
+	return redirect('/')
