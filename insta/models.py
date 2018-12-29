@@ -20,3 +20,7 @@ class SavePagePost(models.Model):
 	page = models.CharField(max_length=250, null=True)
 	img = models.CharField(max_length=2083, null=True)
 	tag = models.CharField(max_length=250, null=True)
+
+class Tags(models.Model):
+	# save all tags and link to user pk
+	pass

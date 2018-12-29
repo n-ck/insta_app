@@ -4,11 +4,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import View
-from models import IgPage, IgPost, SavePagePost
 from django.contrib.auth import authenticate, login, logout
+# from django.contrib.auth import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
+from .models import IgPage, IgPost, SavePagePost
 from .forms import PostForm, PageForm, TagForm
 
 import utils
@@ -30,6 +30,8 @@ class GetPostImg(LoginRequiredMixin, View):
 			'post': "None",
 			'recent': savedposts
 		}
+
+		print request.user.pk
 
 		return render(request, 'post.html', context)
 
@@ -217,6 +219,20 @@ class ViewSavedTag(View):
 
 		return render(request, 'saved_posts.html', context)
 
+class ManageTags(LoginRequiredMixin, View):
+
+	def get(self, request):
+
+		all_tags = SavePagePost.objects.all().values('tag').distinct().exclude(tag=None)
+
+		context = {
+			'tags': all_tags
+		}
+
+		return render(request, 'manage_tags.html', context)
+
+	def post(self, request):
+		pass
 
 
 	# Further development:

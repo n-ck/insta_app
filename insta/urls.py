@@ -15,4 +15,6 @@ urlpatterns = [
     url(r'^savedposts/$', views.ViewSaved.as_view(), name="view_saved"),
     url(r'^savedposts/(?P<tag>[\w-]+)/$', views.ViewSavedTag.as_view(), name="save_tag"),
 
+   url(r'^tags/$', views.ManageTags.as_view(), name='manage_tags')
+
 ]

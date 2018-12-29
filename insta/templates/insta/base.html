@@ -22,16 +22,16 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">Appname</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                 <a class="nav-link" href="{% url 'authenticate:index' %}">Home <span class="sr-only">(current)</span></a>
               </li>
-             {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'insta:get_post' %}">Post</a>
               </li>
@@ -39,18 +39,26 @@
                 <a class="nav-link" href="{% url 'insta:get_page' %}">Page</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'insta:view_saved' %}">Saved</a>
+                <a class="nav-link" href="{% url 'insta:view_saved' %}">Saved Posts</a>
               </li>
              <li class="nav-item">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'insta:manage_tags' %}">Tags</a>
+              </li>
+            </ul>   
+             <ul class="navbar-nav ml-auto">
+              <li>
                 <a class="nav-link" href="{% url 'authenticate:logout' %}">Logout</a>
               </li>
-              <li class="nav-item">
-             {% else %}
+            </ul>            
+            {% else %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
              <li class="nav-item">
                 <a class="nav-link" href="{% url 'authenticate:login' %}">Login</a>
               </li>
-             {% endif %}
             </ul>
+            {% endif %}
           </div>
         </div>
     </nav>
