@@ -22,6 +22,8 @@ class GetPostImg(LoginRequiredMixin, View):
 
 	def get(self, request):
 
+		user = request.user.pk
+
 		form = PostForm()
 		savedposts = SavePagePost.objects.all().order_by('-id')[:5]
 		context = {
@@ -31,11 +33,13 @@ class GetPostImg(LoginRequiredMixin, View):
 			'recent': savedposts
 		}
 
-		print request.user.pk
+		# print request.user.pk
 
 		return render(request, 'post.html', context)
 
 	def post(self, request):
+
+		# user = request.user.pk
 		
 		form = PostForm(request.POST)
 		response = None
@@ -51,7 +55,8 @@ class GetPostImg(LoginRequiredMixin, View):
 
 			tag = form.cleaned_data['tag']
 
-			igpost = IgPost(url=response, page=pagename, img=imgurl, tag=tag)
+			igpost = IgPost(url=response, page=pagename, img=imgurl, 
+							tag=tag)
 			igpost.save()
 
 			context = {
@@ -69,6 +74,7 @@ class GetPage(LoginRequiredMixin, View):
 	def get(self, request):
 
 		form = PageForm(request.GET)
+		user = request.user
 		
 		if form.is_valid():
 			
@@ -77,10 +83,10 @@ class GetPage(LoginRequiredMixin, View):
 
 			request.session['page'] = page 
 
-			igpage = IgPage(page=page, url=url)
+			igpage = IgPage(page=page, url=url, user=user)
 			igpage.save()
 
-			allpages = IgPage.objects.all()
+			allpages = IgPage.objects.filter(user=user)
 
 			allimgs = utils.get_page_script(url)
 			# print allimgs
@@ -97,7 +103,7 @@ class GetPage(LoginRequiredMixin, View):
 
 		else: 
 			form = PageForm()
-			allpages = IgPage.objects.all().order_by('-id')[:5]
+			allpages = IgPage.objects.filter(user=user).order_by('-id')[:5]
 			context = {
 				'form': form,
 				'page': "None",
