@@ -17,6 +17,8 @@
 		<a href="{% url 'insta:post_detail' next  %}">Next</a>
 
 		<img src="{{ post.img }}" class="img-fluid">
+
+		<p>{{ post.page }} <a href="{% url 'insta:get_page' %}?page={{ post.page }}">&raquo;</a></p>
 	</div>
 </div>
 

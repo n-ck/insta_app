@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import IgPage, IgPost, SavePagePost
+from .models import IgPage, SavePost
 from .forms import PostForm, PageForm, TagForm
 
 import utils
@@ -25,15 +25,15 @@ class GetPostImg(LoginRequiredMixin, View):
 		userid = request.user.pk
 
 		form = PostForm()
-		savedposts = SavePagePost.objects.filter(user=userid).order_by('-id')[:5]
+		# savedposts = SavePagePost.objects.filter(user=userid).order_by('-id')[:5]
+		# savedposts = SavePagePost.objects.all()
 		context = {
 			'form': form,
 			'page': "None",
 			'post': "None",
-			'recent': savedposts
+			'recent': "None",
+			# 'recent': savedposts
 		}
-
-		# print request.user.pk
 
 		return render(request, 'post.html', context)
 
@@ -55,9 +55,9 @@ class GetPostImg(LoginRequiredMixin, View):
 
 			tag = form.cleaned_data['tag']
 
-			igpost = IgPost(url=response, page=pagename, img=imgurl, 
-							tag=tag, user=userid)
-			igpost.save()
+			# igpost = IgPost(url=response, page=pagename, img=imgurl, 
+			# 				tag=tag, user=userid)
+			# igpost.save()
 
 			context = {
 				'form': form,
@@ -115,7 +115,7 @@ class GetPage(LoginRequiredMixin, View):
 			return render(request, 'page.html' , context)
 
 
-class SavePost(View):
+class SaveIgPost(View):
 
 	def get(self, request, **kwargs):
 
@@ -127,7 +127,7 @@ class SavePost(View):
 		# print "this is the img: %s and this the page: %s" % (imgurl, igpage)
 
 		# Save to DB:
-		saveigpost = SavePagePost(url=pageurl, page=igpage, img=imgurl, user=userid)
+		saveigpost = SavePost(url=pageurl, page=igpage, img=imgurl, user=userid)
 		saveigpost.save()
 
 		pagecontent = "Img saved! %s %s" % (igpage, imgurl)
@@ -143,7 +143,7 @@ class ViewSaved(LoginRequiredMixin, View):
 	def get(self, request):
 
 		userid = request.user.pk
-		savedposts = SavePagePost.objects.filter(user=userid)
+		savedposts = SavePost.objects.filter(user=userid)
 		tags = savedposts.values('tag').distinct().exclude(tag=None)
 
 		context = {
@@ -159,7 +159,7 @@ class PostDetail(LoginRequiredMixin, View):
 	def get(self, request, postid):
 
 		userid = request.user.pk
-		post = SavePagePost.objects.get(pk=postid)
+		post = SavePost.objects.get(pk=postid)
 
 		next_post = post.id + 1
 		previous_post = post.id - 1
@@ -187,11 +187,11 @@ class PostDetail(LoginRequiredMixin, View):
 			
 			tag = form.cleaned_data['tag']
 
-			post = SavePagePost.objects.get(pk=postid)
+			post = SavePost.objects.get(pk=postid)
 			next_post = post.id + 1
 			previous_post = post.id - 1
 
-			unique_tags = SavePagePost.objects.filter(tag=tag)
+			unique_tags = SavePost.objects.filter(tag=tag)
 
 			post.tag = tag
 			post.save()
@@ -211,7 +211,7 @@ class DeletePost(View):
 
 	def get(self, request, postid):
 
-		post = SavePagePost.objects.get(pk=postid)
+		post = SavePost.objects.get(pk=postid)
 		post.delete()
 
 		return redirect('/savedposts/')
@@ -221,8 +221,8 @@ class ViewSavedTag(View):
 	## page to see post with a certain tag only
 	def get(self, request, tag):
 		
-		tagged_posts = SavePagePost.objects.filter(tag=tag)
-		all_tags = SavePagePost.objects.all().values('tag').distinct().exclude(tag=None)
+		tagged_posts = SavePost.objects.filter(tag=tag)
+		all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
 
 
 		context = {
@@ -237,7 +237,7 @@ class ManageTags(LoginRequiredMixin, View):
 
 	def get(self, request):
 
-		all_tags = SavePagePost.objects.all().values('tag').distinct().exclude(tag=None)
+		all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
 
 		context = {
 			'tags': all_tags
@@ -258,6 +258,13 @@ class ManageTags(LoginRequiredMixin, View):
 	# - post detail page, you can see full size and change tag here
 	# - manage tag page (create, delete or rename tags)
 	# - rename variables with underscore in naming
+	# - page view: sort by page
+	# - page view: scroll view
+
+
+	# Bug:
+	# - Previous and next buttons on Saved Post detail page
+	# - 
 
 
 

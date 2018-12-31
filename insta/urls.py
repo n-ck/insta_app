@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^post/(?P<postid>\d+)/$', views.PostDetail.as_view(), name="post_detail"),
     url(r'^post/(?P<postid>\d+)/delete/$', views.DeletePost.as_view(), name="delete_post"),
 
-    url(r'^savepost/(?P<page>[\w-]+)/(?P<img>.+)/$', views.SavePost.as_view(), name="save_post"),
+    url(r'^savepost/(?P<page>[\w-]+)/(?P<img>.+)/$', views.SaveIgPost.as_view(), name="save_post"),
     url(r'^savedposts/$', views.ViewSaved.as_view(), name="view_saved"),
     url(r'^savedposts/(?P<tag>[\w-]+)/$', views.ViewSavedTag.as_view(), name="save_tag"),
 
