@@ -22,10 +22,10 @@ class GetPostImg(LoginRequiredMixin, View):
 
 	def get(self, request):
 
-		user = request.user.pk
+		userid = request.user.pk
 
 		form = PostForm()
-		savedposts = SavePagePost.objects.all().order_by('-id')[:5]
+		savedposts = SavePagePost.objects.filter(user=userid).order_by('-id')[:5]
 		context = {
 			'form': form,
 			'page': "None",
@@ -39,7 +39,7 @@ class GetPostImg(LoginRequiredMixin, View):
 
 	def post(self, request):
 
-		# user = request.user.pk
+		userid = request.user.pk
 		
 		form = PostForm(request.POST)
 		response = None
@@ -56,7 +56,7 @@ class GetPostImg(LoginRequiredMixin, View):
 			tag = form.cleaned_data['tag']
 
 			igpost = IgPost(url=response, page=pagename, img=imgurl, 
-							tag=tag)
+							tag=tag, user=userid)
 			igpost.save()
 
 			context = {
@@ -119,6 +119,7 @@ class SavePost(View):
 
 	def get(self, request, **kwargs):
 
+		userid = request.user.pk
 		igpage = kwargs.get('page')
 		imgurl = kwargs.get('img')
 		pageurl = "https://www.instagram.com/%s" % igpage
@@ -126,7 +127,7 @@ class SavePost(View):
 		# print "this is the img: %s and this the page: %s" % (imgurl, igpage)
 
 		# Save to DB:
-		saveigpost = SavePagePost(url=pageurl, page=igpage, img=imgurl)
+		saveigpost = SavePagePost(url=pageurl, page=igpage, img=imgurl, user=userid)
 		saveigpost.save()
 
 		pagecontent = "Img saved! %s %s" % (igpage, imgurl)
@@ -141,7 +142,8 @@ class ViewSaved(LoginRequiredMixin, View):
 
 	def get(self, request):
 
-		savedposts = SavePagePost.objects.all()
+		userid = request.user.pk
+		savedposts = SavePagePost.objects.filter(user=userid)
 		tags = savedposts.values('tag').distinct().exclude(tag=None)
 
 		context = {
@@ -156,7 +158,9 @@ class PostDetail(LoginRequiredMixin, View):
 
 	def get(self, request, postid):
 
+		userid = request.user.pk
 		post = SavePagePost.objects.get(pk=postid)
+
 		next_post = post.id + 1
 		previous_post = post.id - 1
 
@@ -170,7 +174,10 @@ class PostDetail(LoginRequiredMixin, View):
 			'tag': post.tag
 		}
 
-		return render(request, 'post_detail.html', context)
+		if userid == post.user:
+			return render(request, 'post_detail.html', context)
+		else:
+			return redirect('insta:view_saved')
 
 	def post(self, request, postid):
 
@@ -224,6 +231,7 @@ class ViewSavedTag(View):
 		}
 
 		return render(request, 'saved_posts.html', context)
+
 
 class ManageTags(LoginRequiredMixin, View):
 
