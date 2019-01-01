@@ -7,6 +7,9 @@
 
 <h1>Saved Posts</h1>
 
+<a href="/savedposts/">Grid</a>
+<a href="/savedposts/?view=scroll">Scroll</a>
+
 <!-- <div class="col-md-6">
 	
 </div>
@@ -22,6 +25,8 @@
 {% endfor %}
 </ul> -->
 
+
+
 {% for tag in tags %}
 	<a href="{% url 'insta:save_tag' tag=tag.tag %}">
 	<h5><span class="badge badge-secondary">{{ tag.tag|title }}</span></h5>
@@ -30,7 +35,12 @@
 
 <div class="row">
 {% for post in posts %}
-	<div class="col-sm-4">
+
+{% if request.GET.view %}
+	<div class="col-sm-12 overview">
+{% else %}
+	<div class="col-sm-4 overview">
+{% endif %}
 		<a href="{% url 'insta:post_detail' post.pk  %}">
 			<img src="{{ post.img }}" class="img-fluid">
 		</a>
