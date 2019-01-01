@@ -4,3 +4,7 @@ h5 {
 nav.navbar.navbar-expand-lg {
 	margin: 0 0 20px 0;
 }
+
+.col-12.prevnext {
+	margin: 0 0 10px 0;
+}

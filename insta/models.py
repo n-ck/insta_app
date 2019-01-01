@@ -27,7 +27,5 @@ class SavePost(models.Model):
 	user = models.IntegerField(null=True)
 
 class Tags(models.Model):
-	# save all tags and link to user pk
-	# tag = models.CharField(max_length=250, null=True)
-	# user = models.IntegerField(null=True)
-	pass
+	tag = models.CharField(max_length=250, null=True)
+	user = models.IntegerField(null=True)

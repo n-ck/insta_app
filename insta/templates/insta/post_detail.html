@@ -9,16 +9,22 @@
 <!-- <h1>Post</h1> -->
 
 <div class="row justify-content-start">
+	<div class="col-12 prevnext">
+		<a href="{% url 'insta:post_detail' previous %}" class="badge badge-light">Previous</a>
+		<a href="{% url 'insta:post_detail' next  %}" class="badge badge-light">Next</a>
+	</div>
+</div>
+
+<div class="row justify-content-start">
 	<div class="col-12">
 		{% if tag is not None %}
 		<h2>{{ tag }}</h2>
 		{% endif %}
-		<a href="{% url 'insta:post_detail' previous %}">Previous</a>
-		<a href="{% url 'insta:post_detail' next  %}">Next</a>
 
 		<img src="{{ post.img }}" class="img-fluid">
 
-		<p>{{ post.page }} <a href="{% url 'insta:get_page' %}?page={{ post.page }}">&raquo;</a></p>
+		<p><a href="{% url 'insta:get_page' %}?page={{ post.page }}" class="badge badge-info">{{ post.page }}</a></p>
+
 	</div>
 </div>
 

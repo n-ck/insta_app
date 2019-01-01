@@ -25,14 +25,13 @@ class GetPostImg(LoginRequiredMixin, View):
 		userid = request.user.pk
 
 		form = PostForm()
-		# savedposts = SavePagePost.objects.filter(user=userid).order_by('-id')[:5]
-		# savedposts = SavePagePost.objects.all()
+		savedposts = SavePost.objects.filter(user=userid).order_by('-id')[:5]
+
 		context = {
 			'form': form,
 			'page': "None",
 			'post': "None",
-			'recent': "None",
-			# 'recent': savedposts
+			'recent': savedposts
 		}
 
 		return render(request, 'post.html', context)
@@ -53,11 +52,7 @@ class GetPostImg(LoginRequiredMixin, View):
 			pagescript = utils.get_post_script(response, 3)
 			pagename= utils.get_page_from_post(pagescript)
 
-			tag = form.cleaned_data['tag']
-
-			# igpost = IgPost(url=response, page=pagename, img=imgurl, 
-			# 				tag=tag, user=userid)
-			# igpost.save()
+			# tag = form.cleaned_data['tag']
 
 			context = {
 				'form': form,
@@ -134,8 +129,10 @@ class SaveIgPost(View):
 
 		# return HttpResponse(pagecontent)
 
-		redirecturl = '/page/?page=%s' % igpage
-		return redirect(redirecturl)
+		# redirecturl = '/page/?page=%s' % igpage
+		previousurl = request.META['HTTP_REFERER']
+		print previousurl
+		return redirect(previousurl)
 
 
 class ViewSaved(LoginRequiredMixin, View):

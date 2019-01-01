@@ -49,8 +49,36 @@
 			</a>
 		</form>
 	</div>
+
+<!-- 	<div id="result">
+	</div> -->
+
+<!-- 	<script>
+	$("#savepost").click(function(){ 
+	     $.ajax({
+	        url: "{% url 'insta:save_post' page=page img=post %}", 
+	        success:   function(result){ 
+	            console.log(url);
+	        }
+	      });
+	});
+	</script> -->
+
+<!-- 	<script>
+		$("#savepost").on('click',function(e) {
+		   e.preventDefault();
+		  //here you can load verify.aspx by using console.log("saved post");
+		  var url = "{% url 'insta:save_post' page=page img=post %}"
+		  // console.log(url); 
+		   $("#result").load(url); 
+		    console.log("saved post");  
+		});
+	</script> -->
+
 {% endfor %}
 </div>
+
+
 
 
 
