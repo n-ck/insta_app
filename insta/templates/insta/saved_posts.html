@@ -5,48 +5,40 @@
 
 {% block content %}
 
-<h1>Saved Posts</h1>
+<div class="container">
 
-<a href="/savedposts/">Grid</a>
-<a href="/savedposts/?view=scroll">Scroll</a>
+	<h1>Saved Posts</h1>
 
-<!-- <div class="col-md-6">
-	
-</div>
+	<a href="/savedposts/">Grid</a>
+	<a href="/savedposts/?view=scroll">Scroll</a>
 
-<br />
-<a href="{{ pageurl }}" target="_blank">{{ pageurl }}</a> -->
+	<br />
 
-<br />
-<!-- <p>Database output:</p>
-<ul>
-{% for output in allpages %}
-	<li>{{ output.page }}</li>
-{% endfor %}
-</ul> -->
-
-
-
-{% for tag in tags %}
-	<a href="{% url 'insta:save_tag' tag=tag.tag %}">
-	<h5><span class="badge badge-secondary">{{ tag.tag|title }}</span></h5>
-	</a>
-{% endfor %}
-
-<div class="row">
-{% for post in posts %}
-
-{% if request.GET.view %}
-	<div class="col-sm-12 overview">
-{% else %}
-	<div class="col-sm-4 overview">
-{% endif %}
-		<a href="{% url 'insta:post_detail' post.pk  %}">
-			<img src="{{ post.img }}" class="img-fluid">
-		</a>
+	<div class="row">
+		<div class="col-md-12">
+		{% for tag in tags %}
+			<a href="{% url 'insta:save_tag' tag=tag.tag %}">
+			<h5><span class="badge badge-secondary">{{ tag.tag|title }}</span></h5>
+			</a>
+		{% endfor %}
+		</div>
 	</div>
-{% endfor %}
-</div>
 
+	<div class="row">
+
+	{% for post in posts %}
+		{% if request.GET.view %}
+		<div class="col-sm-12 overview">
+		{% else %}
+		<div class="col-sm-4 overview">
+		{% endif %}
+			<a href="{% url 'insta:post_detail' post.pk  %}">
+				<img src="{{ post.img }}" class="img-fluid">
+			</a>
+		</div>
+	{% endfor %}
+	</div> <!-- ends row -->
+
+</div> <!-- ends container -->
 
 {% endblock %}

@@ -5,82 +5,81 @@
 
 {% block content %}
 
-<h1>Page</h1>
 
-<div class="col-md-6">
-	<form action="{% url 'insta:get_page' %}" method="GET">
-		<div class="form-group">
-			<p>Enter page name:</p>
-			<label for="" class="">Page:</label>
-			{{ form.page }}
-		</div>
-		<button type="submit" class="btn btn-primary mb-2">Submit</button>
-<!-- 		{% csrf_token %} -->
-	</form>
-</div>
+<div class="container">
 
-<br />
-<a href="{{ pageurl }}" target="_blank">{{ pageurl }}</a>
-
-<br />
-<!-- <p>Database output:</p>
-<ul>
-{% for output in allpages %}
-	<li>{{ output.page }}</li>
-{% endfor %}
-</ul> -->
-
-{% if "None" in page %}
-5 recent pages:
-<ul>
-	{% for ig in allpages %}
-	<li><a href="{% url 'insta:get_page' %}?page={{ ig.page }}">{{ ig.page }}</a></li>
-	{% endfor %}
-</ul>
-{% endif %}
-
-<div class="row">
-{% for post in posts %}
-	<div class="col-sm-4">
-		<form action="{% url 'insta:get_page' %}" method="POST">
-			<img src="{{ post }}" class="img-fluid">
-			<a href="{% url 'insta:save_post' page=page img=post %}">
-				<button type="button" class="btn btn-light" id="savepost">Save</button>
-			</a>
+	<div class="col-md-6">
+		<h1>Page</h1>
+		<form action="{% url 'insta:get_page' %}" method="GET">
+			<div class="form-group">
+				<p>Enter page name:</p>
+				<label for="" class="">Page:</label>
+				{{ form.page }}
+			</div>
+			<button type="submit" class="btn btn-primary mb-2">Submit</button>
+			<!-- {% csrf_token %} NOT NEEDED FOR GET REQUEST -->
 		</form>
 	</div>
 
-<!-- 	<div id="result">
-	</div> -->
+	<div class="col-md-6">
+		<br />
+		<a href="{{ pageurl }}" target="_blank">{{ pageurl }}</a>
+		<br />
+	</div>
 
-<!-- 	<script>
-	$("#savepost").click(function(){ 
-	     $.ajax({
-	        url: "{% url 'insta:save_post' page=page img=post %}", 
-	        success:   function(result){ 
-	            console.log(url);
-	        }
-	      });
-	});
-	</script> -->
+	{% if "None" in page %}
+	<div class="col-md-6">
+		5 recent pages:
+		<ul>
+			{% for ig in allpages %}
+			<li><a href="{% url 'insta:get_page' %}?page={{ ig.page }}">{{ ig.page }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
 
-<!-- 	<script>
-		$("#savepost").on('click',function(e) {
-		   e.preventDefault();
-		  //here you can load verify.aspx by using console.log("saved post");
-		  var url = "{% url 'insta:save_post' page=page img=post %}"
-		  // console.log(url); 
-		   $("#result").load(url); 
-		    console.log("saved post");  
+	<div class="row" style="margin-left:0px;">
+<!-- 		<div class="col-md-12"> -->
+		{% for post in posts %}
+			<div class="col-md-4">
+				<form action="{% url 'insta:get_page' %}" method="POST">
+					<img src="{{ post }}" class="img-fluid">
+					<a href="{% url 'insta:save_post' page=page img=post %}">
+						<button type="button" class="btn btn-light" id="savepost">Save</button>
+					</a>
+				</form>
+			</div>
+<!-- 		</div> -->
+
+
+	<!-- 	<div id="result">
+		</div> -->
+
+	<!-- 	<script>
+		$("#savepost").click(function(){ 
+		     $.ajax({
+		        url: "{% url 'insta:save_post' page=page img=post %}", 
+		        success:   function(result){ 
+		            console.log(url);
+		        }
+		      });
 		});
-	</script> -->
+		</script> -->
 
-{% endfor %}
-</div>
+	<!-- 	<script>
+			$("#savepost").on('click',function(e) {
+			   e.preventDefault();
+			  //here you can load verify.aspx by using console.log("saved post");
+			  var url = "{% url 'insta:save_post' page=page img=post %}"
+			  // console.log(url); 
+			   $("#result").load(url); 
+			    console.log("saved post");  
+			});
+		</script> -->
 
+	{% endfor %}
+	</div>
 
-
-
-
+</div><!-- ends container -->
 
 {% endblock %}

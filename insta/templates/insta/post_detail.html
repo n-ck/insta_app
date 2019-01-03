@@ -6,37 +6,49 @@
 {% block content %}
 
 
-<!-- <h1>Post</h1> -->
+<div class="container">
 
-<div class="row justify-content-start">
-	<div class="col-12 prevnext">
-		<a href="{% url 'insta:post_detail' previous %}" class="badge badge-light">Previous</a>
-		<a href="{% url 'insta:post_detail' next  %}" class="badge badge-light">Next</a>
+	<div class="row">
+		<div class="col-12 prevnext">
+			<h5><a href="{% url 'insta:post_detail' previous %}" class="badge badge-light">Previous</a></h5>
+			<h5><a href="{% url 'insta:post_detail' next  %}" class="badge badge-light">Next</a></h5>
+		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			{% if tag is not None %}
+			<h5><span class="badge badge-light">{{ tag }}</span></h5>
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="row justify-content-start">
+		<div class="col-12">
+
+			<img src="{{ post.img }}" class="img-fluid">
+
+			
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<h5><a href="{% url 'insta:get_page' %}?page={{ post.page }}" class="badge badge-info">{{ post.page }}</a></h5>
+		</div>
+	</div>
+
+	<a href="{% url 'insta:delete_post' postid=post.pk %}" class="btn btn-secondary mb-2">Delete</a>
+	<form action="{% url 'insta:post_detail' postid=post.pk %}" method="POST">
+		<div class="form-group">
+			<label for="" class="">Tag:</label>
+			{{ form.tag }}
+		</div>
+		<button type="submit" class="btn btn-primary mb-2">Save</button>
+		{% csrf_token %}
+	</form>
+
 </div>
-
-<div class="row justify-content-start">
-	<div class="col-12">
-		{% if tag is not None %}
-		<h2>{{ tag }}</h2>
-		{% endif %}
-
-		<img src="{{ post.img }}" class="img-fluid">
-
-		<p><a href="{% url 'insta:get_page' %}?page={{ post.page }}" class="badge badge-info">{{ post.page }}</a></p>
-
-	</div>
-</div>
-
-<a href="{% url 'insta:delete_post' postid=post.pk %}" class="btn btn-secondary mb-2">Delete</a>
-<form action="{% url 'insta:post_detail' postid=post.pk %}" method="POST">
-	<div class="form-group">
-		<label for="" class="">Tag:</label>
-		{{ form.tag }}
-	</div>
-	<button type="submit" class="btn btn-primary mb-2">Save</button>
-	{% csrf_token %}
-</form>
-
 
 {% endblock %}
