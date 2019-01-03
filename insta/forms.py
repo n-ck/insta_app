@@ -17,4 +17,7 @@ class PageForm(forms.Form):
 
 class TagForm(forms.Form):
 	tag = forms.CharField(label='Tag:', 
-						  widget=forms.Select(choices=TAGS))
+						  widget=forms.Select(choices=TAGS), 
+						  required=False
+						  )
+	new_tag = forms.CharField(label='Tag name:', max_length=250)

@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 # from django.contrib.auth import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import IgPage, SavePost
+from .models import IgPage, SavePost, Tags
 from .forms import PostForm, PageForm, TagForm
 
 import utils
@@ -234,16 +234,38 @@ class ManageTags(LoginRequiredMixin, View):
 
 	def get(self, request):
 
-		all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
+		all_tags = Tags.objects.all().distinct().exclude(tag=None)
+		# all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
+
+		form = TagForm()
 
 		context = {
-			'tags': all_tags
+			'tags': all_tags,
+			'form': form,
 		}
 
 		return render(request, 'manage_tags.html', context)
 
 	def post(self, request):
-		pass
+
+		all_tags = Tags.objects.all().distinct().exclude(tag=None)
+		# all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
+
+		form = TagForm(request.POST)
+		userid = request.user.pk
+		# tag_name = form.cleaned_data['tag_name']
+
+		if form.is_valid():
+			tag_name = form.cleaned_data['new_tag']
+			save_tag = Tags(tag=tag_name, user=userid)
+			save_tag.save()
+
+			context = {
+				'tags': all_tags,
+				'form': form,
+			}
+
+			return render(request, 'manage_tags.html', context)
 
 
 	# Further development:
