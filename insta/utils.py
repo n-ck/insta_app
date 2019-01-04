@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 import re
-
+from .models import Tags
+from django.conf import settings
 
 def get_post_script(posturl, scriptno):
 
@@ -97,3 +98,27 @@ def get_page_imgs(pagescript):
 		pagelist.append(images[1])
 
 	return pagelist
+
+def tag_dropdown(userid):
+
+	# taglist = []
+	
+	# tags = Tags.objects.filter(user=userid)
+
+	# for tagname in tags:
+	# 	taglist.append(tagname.tag)
+
+	# return taglist
+
+	taglist = []
+	
+	tags = Tags.objects.filter(user=userid)
+
+	for tagname in tags:
+		firsttag = tagname.tag
+		secondtag = tagname.tag.capitalize()
+		tagtuple = (firsttag, secondtag)
+		taglist.append(tagtuple)
+
+	return taglist
+

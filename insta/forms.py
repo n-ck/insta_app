@@ -1,10 +1,13 @@
 from django import forms
+import utils
 
-TAGS = [
-('cars', 'Cars'),
-('inspiration', 'Inspiration'),
-('other', 'Other'),
-]
+# TAGS = [
+# ('cars', 'Cars'),
+# ('inspiration', 'Inspiration'),
+# ('other', 'Other'),
+# ]
+
+TAGS = utils.tag_dropdown(1)
 
 class PostForm(forms.Form):
 	post = forms.CharField(label='IG Post URL', max_length=250)

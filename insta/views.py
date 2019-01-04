@@ -15,7 +15,8 @@ import utils
 
 
 def index(request):
-    return render(request, 'index.html', {})
+	
+	return render(request, 'index.html', {})
 
 
 class GetPostImg(LoginRequiredMixin, View):
@@ -23,6 +24,9 @@ class GetPostImg(LoginRequiredMixin, View):
 	def get(self, request):
 
 		userid = request.user.pk
+
+		print utils.tag_dropdown(1)
+		print len(utils.tag_dropdown(1))
 
 		form = PostForm()
 		savedposts = SavePost.objects.filter(user=userid).order_by('-id')[:5]
@@ -266,6 +270,10 @@ class ManageTags(LoginRequiredMixin, View):
 			}
 
 			return render(request, 'manage_tags.html', context)
+
+
+
+
 
 
 	# Further development:
