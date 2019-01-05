@@ -272,7 +272,46 @@ class ManageTags(LoginRequiredMixin, View):
 			return render(request, 'manage_tags.html', context)
 
 
+class EditTag(LoginRequiredMixin, View):
 
+	def get(self, request, tag):
+
+		all_tags = Tags.objects.all().distinct().exclude(tag=None)
+		current_tag = Tags.objects.filter(pk=tag)
+		form = TagForm()
+
+		context = {
+			'tags': all_tags,
+			'current_tag': current_tag,
+			'form': form,
+		}
+
+		return render(request, 'edit_tag.html', context)
+
+	def post(self, request, tag):
+
+		form = TagForm(request.POST)
+
+		if form.is_valid():
+
+			all_tags = Tags.objects.all().distinct().exclude(tag=None)
+			tag_name = form.cleaned_data['new_tag']
+			current_tag = Tags.objects.filter(pk=tag)
+			current_tag.update(tag=tag_name)
+
+			context = {
+				'tags': all_tags,
+				'current_tag': current_tag,
+				'form': form,
+			}
+			try:
+				return render(request, 'manage_tags.html', context)
+			
+			except:
+				return render(request, 'edit_tag.html', context)
+
+
+		
 
 
 
@@ -285,8 +324,9 @@ class ManageTags(LoginRequiredMixin, View):
 	# - post detail page, you can see full size and change tag here
 	# - manage tag page (create, delete or rename tags)
 	# - rename variables with underscore in naming
-	# - page view: sort by page
-	# - page view: scroll view
+	# + page view: sort by page
+	# + page view: scroll view
+	# - add original post url to model/db
 
 
 	# Bug:

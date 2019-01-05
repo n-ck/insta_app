@@ -12,10 +12,11 @@ urlpatterns = [
     url(r'^post/(?P<postid>\d+)/delete/$', views.DeletePost.as_view(), name="delete_post"),
 
     url(r'^savepost/(?P<page>[\w-]+)/(?P<img>.+)/$', views.SaveIgPost.as_view(), name="save_post"),
-    
+
     url(r'^savedposts/$', views.ViewSaved.as_view(), name="view_saved"),
     url(r'^savedposts/(?P<tag>[\w-]+)/$', views.ViewSavedTag.as_view(), name="save_tag"),
 
-   url(r'^tags/$', views.ManageTags.as_view(), name='manage_tags')
+   url(r'^tags/$', views.ManageTags.as_view(), name='manage_tags'),
+   url(r'^tags/edit/(?P<tag>\d+)$', views.EditTag.as_view(), name='edit_tag')
 
 ]

@@ -28,9 +28,9 @@
 
 	{% for post in posts %}
 		{% if request.GET.view %}
-		<div class="col-sm-12 overview">
+		<div class="col-sm-12 mb-4 overview">
 		{% else %}
-		<div class="col-sm-4 overview">
+		<div class="col-sm-4 mb-4 overview">
 		{% endif %}
 			<a href="{% url 'insta:post_detail' post.pk  %}">
 				<img src="{{ post.img }}" class="img-fluid">
