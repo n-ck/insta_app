@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
-# from django.contrib.auth import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 from .models import IgPage, SavePost, Tags
 from .forms import PostForm, PageForm, TagForm
@@ -135,7 +135,9 @@ class SaveIgPost(View):
 
 		# redirecturl = '/page/?page=%s' % igpage
 		previousurl = request.META['HTTP_REFERER']
-		print previousurl
+
+		messages.success(request, ('Post was saved!'))
+
 		return redirect(previousurl)
 
 
@@ -161,6 +163,9 @@ class PostDetail(LoginRequiredMixin, View):
 
 		userid = request.user.pk
 		post = SavePost.objects.get(pk=postid)
+		# tags = Tags.objects.filter(user=userid)
+
+		# utils.tag_dropdown(1)
 
 		next_post = post.id + 1
 		previous_post = post.id - 1
@@ -305,11 +310,23 @@ class EditTag(LoginRequiredMixin, View):
 				'form': form,
 			}
 			try:
+				messages.success(request, ('Tag was successfully changed'))
 				return render(request, 'manage_tags.html', context)
 			
 			except:
+				messages.success(request, ('Something went wrong...'))
 				return render(request, 'edit_tag.html', context)
 
+
+class DeleteTag(View):
+
+	def get(self, request, tag):
+
+		tag = Tags.objects.get(pk=tag)
+		tag.delete()
+		messages.success(request, ('Tag was successfully deleted'))
+
+		return redirect('/tags/')
 
 		
 
@@ -320,18 +337,19 @@ class EditTag(LoginRequiredMixin, View):
 	# + after entering post url, you can save the post to database
 	# + page with all saved post
 	# + logic to delete post on detail page
-	# - posts page should have all saved posts with filters by tag
-	# - post detail page, you can see full size and change tag here
-	# - manage tag page (create, delete or rename tags)
-	# - rename variables with underscore in naming
-	# + page view: sort by page
-	# + page view: scroll view
+	# + posts page should have all saved posts with filters by tag
+	# + post detail page, you can see full size and change tag here
+	# + manage tag page (create, delete or rename tags)
+	# + page view: scroll and grid view
+	# - page view: sort by page
+	# - rename variables with underscore in naming (correct python naming)
 	# - add original post url to model/db
 
 
 	# Bug:
 	# - Previous and next buttons on Saved Post detail page
-	# - 
+	# - Underscores or periods in page names
+	# - Some posts don't load
 
 
 

@@ -7,20 +7,26 @@
 
 <div class="container">
 
-	<h1>Saved Posts</h1>
+	<div class="row mb-2">
+		<div class="col-md-10">
+			<h1>Saved Posts</h1>
+		</div>
+		<div class="col-md-2 mt-4">
+			<a href="/savedposts/" class="text-secondary">Grid</a>
+			<a href="/savedposts/?view=scroll" class="text-secondary">Scroll</a>
+		</div>
+	</div>
 
-	<a href="/savedposts/">Grid</a>
-	<a href="/savedposts/?view=scroll">Scroll</a>
-
-	<br />
-
-	<div class="row">
+	<div class="row mb-4">
 		<div class="col-md-12">
 		{% for tag in tags %}
 			<a href="{% url 'insta:save_tag' tag=tag.tag %}">
 			<h5><span class="badge badge-secondary">{{ tag.tag|title }}</span></h5>
 			</a>
 		{% endfor %}
+			<a href="{% url 'insta:view_saved' %}">
+			<h5><span class="badge badge-secondary">All</span></h5>
+			</a>
 		</div>
 	</div>
 

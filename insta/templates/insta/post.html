@@ -8,7 +8,7 @@
 
 <div class="container">
 	<div class="col-md-6">
-		<h1>Post</h1>
+		<h1 class="mb-4">Post</h1>
 		<form action="{% url 'insta:get_post' %}" method="POST">
 			<div class="form-group">
 				<p>Enter post url:</p>
@@ -37,7 +37,7 @@
 	<div class="col-md-6">
 		5 recent posts:
 	</div>
-	
+
 	<div class="row" style="margin-left:0px;">		
 		{% for ig in recent %}
 		<div class="col-md-3">

@@ -24,12 +24,15 @@
 		<div class="col-md-6">
 			<h4 class="mt-4 mb-3">Edit: {{ current.tag }}</h4>
 
-			<form action="{% url 'insta:edit_tag' tag=current.id%}" method="POST">
+			<form action="{% url 'insta:edit_tag' tag=current.id %}" method="POST">
 				<div class="form-group">
 					<label for="" class="">New tagname:</label>
 					{{ form.new_tag }}
 				</div>
-				<button type="submit" class="btn btn-primary mb-2">Save</button>
+				<a href="{% url 'insta:delete_tag' tag=current.id %}">
+					<button type="button" class="btn btn-danger">Delete</button>
+				</a>
+				<button type="submit" class="btn btn-primary">Save</button>
 				{% csrf_token %}
 			</form>
 		</div>
