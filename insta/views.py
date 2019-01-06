@@ -50,13 +50,16 @@ class GetPostImg(LoginRequiredMixin, View):
 		if form.is_valid():
 
 			response = form.cleaned_data['post']
-			imgscript = utils.get_post_script(response, 4)
-			imgurl = utils.get_post_src(imgscript) 
 
-			pagescript = utils.get_post_script(response, 3)
-			pagename= utils.get_page_from_post(pagescript)
+			# imgscript = utils.get_post_script(response, 4)
+			# imgurl = utils.get_post_src(imgscript) 
+			imgurl = utils.get_post_script(response, 3, "postscript")
 
-			# tag = form.cleaned_data['tag']
+			## temporary commenting this out:
+			# pagescript = utils.get_post_script(response, 4)
+			# pagename = utils.get_page_from_post(pagescript, 3)
+			# pagename = utils.get_post_script(response, 2)
+			pagename = "test"
 
 			context = {
 				'form': form,
@@ -146,7 +149,7 @@ class ViewSaved(LoginRequiredMixin, View):
 	def get(self, request):
 
 		userid = request.user.pk
-		savedposts = SavePost.objects.filter(user=userid)
+		savedposts = SavePost.objects.filter(user=userid).order_by('-id')
 		tags = savedposts.values('tag').distinct().exclude(tag=None)
 
 		context = {
