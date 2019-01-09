@@ -20,7 +20,7 @@ from django.conf import settings
 # 	return scriptlist[scriptno]
 
 
-def get_post_script(posturl, scriptno, *scripttype):
+def get_post_script(posturl, scriptno, *args):
 
 	r = requests.get(posturl)
 	soup = BeautifulSoup(r.text, 'html.parser')
@@ -32,12 +32,15 @@ def get_post_script(posturl, scriptno, *scripttype):
 
 	scriptno = int(scriptno)
 
-	if scripttype:
-		print "it works"
-	else:
-		print "it doesn't work bro"
+	for arg in args:
+		if arg == "postscript":
+			return get_post_src(scriptlist[scriptno], scriptno, posturl)
+		elif arg == "pagescript":
+			return get_page_from_post(scriptlist[scriptno], scriptno, posturl)
+		else:
+			print "couldn't find the right script..."
 
-	return get_post_src(scriptlist[scriptno], scriptno, posturl)
+	# return get_post_src(scriptlist[scriptno], scriptno, posturl)
 
 	# if script == "postscript":
 	# 	return get_post_src(scriptlist[scriptno], scriptno, posturl)
@@ -65,7 +68,7 @@ def get_post_src(rawscript, scriptno, posturl):
 	except:
 		if scriptno < 8:
 			scriptno += 1
-			return get_post_script(posturl, scriptno)
+			return get_post_script(posturl, scriptno, "postscript")
 		else:
 			print "failure"
 
@@ -111,7 +114,7 @@ def get_page_from_post(rawscript, scriptno, posturl):
 	except:
 		if scriptno < 6:
 			scriptno += 1
-			return get_post_script(posturl, scriptno)
+			return get_post_script(posturl, scriptno, "pagescript")
 		else:
 			re1='.*?'	# Non-greedy match on filler
 			re2='(username)'	# Uninteresting: word

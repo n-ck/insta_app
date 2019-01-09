@@ -25,9 +25,6 @@ class GetPostImg(LoginRequiredMixin, View):
 
 		userid = request.user.pk
 
-		print utils.tag_dropdown(1)
-		print len(utils.tag_dropdown(1))
-
 		form = PostForm()
 		savedposts = SavePost.objects.filter(user=userid).order_by('-id')[:5]
 
@@ -58,8 +55,8 @@ class GetPostImg(LoginRequiredMixin, View):
 			## temporary commenting this out:
 			# pagescript = utils.get_post_script(response, 4)
 			# pagename = utils.get_page_from_post(pagescript, 3)
-			# pagename = utils.get_post_script(response, 2)
-			pagename = "test"
+			pagename = utils.get_post_script(response, 2, "pagescript")
+			# pagename = "test"
 
 			context = {
 				'form': form,
