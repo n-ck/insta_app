@@ -173,7 +173,7 @@ class PostDetail(LoginRequiredMixin, View):
 		next_post = post.id + 1
 		previous_post = post.id - 1
 
-		form = TagForm()
+		form = TagForm(user=userid)
 
 		context = {
 			'form': form, 
@@ -190,7 +190,7 @@ class PostDetail(LoginRequiredMixin, View):
 
 	def post(self, request, postid):
 
-		form = TagForm(request.POST)
+		form = TagForm(user=request.user.id)
 
 		if form.is_valid():
 			
@@ -246,10 +246,12 @@ class ManageTags(LoginRequiredMixin, View):
 
 	def get(self, request):
 
-		all_tags = Tags.objects.all().distinct().exclude(tag=None)
+		userid = request.user.id
+
+		all_tags = Tags.objects.filter(user=userid).distinct().exclude(tag=None)
 		# all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
 
-		form = TagForm()
+		form = TagForm(user=userid)
 
 		context = {
 			'tags': all_tags,
@@ -260,7 +262,8 @@ class ManageTags(LoginRequiredMixin, View):
 
 	def post(self, request):
 
-		all_tags = Tags.objects.all().distinct().exclude(tag=None)
+		userid = request.user.ind
+		all_tags = Tags.objects.filter(user=userid).distinct().exclude(tag=None)
 		# all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
 
 		form = TagForm(request.POST)
@@ -284,9 +287,12 @@ class EditTag(LoginRequiredMixin, View):
 
 	def get(self, request, tag):
 
-		all_tags = Tags.objects.all().distinct().exclude(tag=None)
+		userid = request.user.id
+
+		all_tags = Tags.objects.filter(user=userid).distinct().exclude(tag=None)
 		current_tag = Tags.objects.filter(pk=tag)
-		form = TagForm()
+
+		form = TagForm(user=userid)
 
 		context = {
 			'tags': all_tags,
@@ -298,11 +304,13 @@ class EditTag(LoginRequiredMixin, View):
 
 	def post(self, request, tag):
 
+		userid = request.user.id
+
 		form = TagForm(request.POST)
 
 		if form.is_valid():
 
-			all_tags = Tags.objects.all().distinct().exclude(tag=None)
+			all_tags = Tags.objects.filter(user=userid).distinct().exclude(tag=None)
 			tag_name = form.cleaned_data['new_tag']
 			current_tag = Tags.objects.filter(pk=tag)
 			current_tag.update(tag=tag_name)
@@ -353,6 +361,7 @@ class DeleteTag(View):
 	# - Previous and next buttons on Saved Post detail page
 	# - Underscores or periods in page names
 	# - Some posts don't load
+	# - tags with spaces don't work on savedposts page
 
 
 

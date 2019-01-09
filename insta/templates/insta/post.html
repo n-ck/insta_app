@@ -40,8 +40,10 @@
 
 	<div class="row" style="margin-left:0px;">		
 		{% for ig in recent %}
-		<div class="col-md-3">
-			<img src="{{ ig.img }}" class="img-fluid">
+		<div class="col-md-3 mb-4">
+			<a href="{% url 'insta:post_detail' postid=ig.id %}">
+				<img src="{{ ig.img }}" class="img-fluid">
+			</a>
 		</div>
 		{% endfor %}
 	</div>
