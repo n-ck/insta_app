@@ -259,7 +259,7 @@ class ManageTags(LoginRequiredMixin, View):
 
 	def post(self, request):
 
-		userid = request.user.ind
+		userid = request.user.id
 		all_tags = Tags.objects.filter(user=userid).distinct().exclude(tag=None)
 		# all_tags = SavePost.objects.all().values('tag').distinct().exclude(tag=None)
 
@@ -355,9 +355,9 @@ class DeleteTag(View):
 
 
 	# Bug:
+	# + Underscores or periods in page names
+	# + Some posts don't load
 	# - Previous and next buttons on Saved Post detail page
-	# - Underscores or periods in page names
-	# - Some posts don't load
 	# - tags with spaces don't work on savedposts page
 
 
