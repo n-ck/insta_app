@@ -25,6 +25,7 @@
 {% if "None" not in post %}
 	<div class="row">
 		<div class="col-md-6">
+			<div id="result"></div>
 			<img src="{{ post }}" class="img-fluid">
 			<a href="{% url 'insta:save_post' page=page img=post %}">
 				<button type="button" class="btn btn-light" id="savepost">Save</button>
@@ -32,13 +33,13 @@
 		</div>
 	</div>
 	{% else %}
-	
-	
+
+
 	<div class="col-md-6">
 		5 recent posts:
 	</div>
 
-	<div class="row" style="margin-left:0px;">		
+	<div class="row" style="margin-left:0px;">
 		{% for ig in recent %}
 		<div class="col-md-3 mb-4">
 			<a href="{% url 'insta:post_detail' postid=ig.id %}">
@@ -50,6 +51,5 @@
 
 {% endif %}
 </div><!-- ends container -->
-
 
 {% endblock %}
